@@ -1,0 +1,25 @@
+{
+  "name": "closet-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mini-hackathons/Closet-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mini-hackathons/Closet-Backend/issues"
+  },
+  "homepage": "https://github.com/mini-hackathons/Closet-Backend#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.15.1",
+    "mysql": "^2.16.0"
+  }
+}
