@@ -5,11 +5,18 @@ const connection = mysql.createConnection({
     port     : '3306',
     user     : 'root',
     password : 'password',
-    database : "closet"
+    database : 'closet'
 });
 
 connection.connect(function(err) {
     if (err) throw err;
+    console.log('Connected to MySQL!');
 });
+
+// const sql = 'CREATE DATABASE closet';
+// connection.query(sql, (err, result) => {
+//     if(err) throw err;
+//     console.log(result);
+// });
 
 module.exports = connection;
