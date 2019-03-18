@@ -1,19 +1,19 @@
 const userCtrl = require('../controllers/userCtrl');
+const { loggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
-        .route('/test')
-        .get(userCtrl.test);
-    router
         .route('/create-user')
         .post(userCtrl.createUser);
+
     router
-        .route('/add-friend')
-        .post(userCtrl.addFriend);
+        .route('/all-users')
+        .get(userCtrl.getAllUsers);
+
     router
-        .route('/:id/get-friends')
-        .get(userCtrl.getFriends);
+        .route('/delete-user')
+        .delete(loggedIn, userCtrl.deleteUser);
     router
-        .route('/connect-calendar')
-        .post(userCtrl.connectCalendar);
+        .route('/dtest')
+        .delete(userCtrl.dTest);
 }

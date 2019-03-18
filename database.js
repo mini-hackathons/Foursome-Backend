@@ -1,22 +1,15 @@
-const mysql = require('mysql');
+const mongoose = require('mongoose');
 
-const connection = mysql.createConnection({
-    host     : 'localhost',
-    port     : '3306',
-    user     : 'root',
-    password : 'password',
-    database : 'closet'
-});
+const connectToMongo = async (mongoPath) => {
+    try {
+        await mongoose.connect(mongoPath, {
+            useNewUrlParser: true,
+            useCreateIndex: true
+        });
+        console.log('Mongo connected!');
+    }catch(err) {
+        console.log(`Error: ${err}`);
+    }
+}
 
-connection.connect(function(err) {
-    if (err) throw err;
-    console.log('Connected to MySQL!');
-});
-
-// const sql = 'CREATE DATABASE closet';
-// connection.query(sql, (err, result) => {
-//     if(err) throw err;
-//     console.log(result);
-// });
-
-module.exports = connection;
+module.exports = connectToMongo;

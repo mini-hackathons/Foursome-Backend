@@ -1,7 +1,9 @@
 const user = require('./user');
-const calendar = require('./calendar');
+const item = require('./item');
+const login = require('./login');
 
 module.exports = (router) => {
     user(router);
-    calendar(router);
+    item(router);
+    login(router);
 }
