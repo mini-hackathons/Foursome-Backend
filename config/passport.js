@@ -1,10 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/User');
+const Token = require('../models/Token');
 
 module.exports = (passport) => {
     passport.use(new LocalStrategy(
       async (username, password, done) => {
+
         try{
             const user = await User.findOne({$or: [
                 { email: username },

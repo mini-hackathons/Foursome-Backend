@@ -32,6 +32,7 @@ module.exports = {
                 }
             });        
         }catch(err) {
+            console.log(err);
             res.status(409).send({
                 error: err.name,
                 message: err.message
@@ -40,18 +41,24 @@ module.exports = {
     },
     // Set selection to null to return all values
     findAndPopulate: async(res, model, id, property, selection) => {
-        try {            
-            await model.findById(id)
+        try {
+            // console.log('Find and Populate----------------')
+            const population = await model.findById(id)
                 .select(selection)
                 .populate(property, ((err, population) => {
                     if(err) throw new Error("Cannot populate document");
 
-                    res.status(200).send({
-                        response: 'Successfully populated document!',
-                        data: population
-                    });
+                    return population
                 }));
+
+                // console.log(population)
+
+            res.status(200).send({
+                response: 'Successfully populated document!',
+                data: population
+            });
         }catch(err) {
+            console.log('Find and Populate error');
             res.status(401).send({
                 error: err.name,
                 message: err.message

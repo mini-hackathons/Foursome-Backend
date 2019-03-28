@@ -3,8 +3,8 @@ const { loggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
-        .route('/create-user')
-        .post(userCtrl.createUser);
+        .route('/profile')
+        .get(loggedIn, userCtrl.getProfile);
 
     router
         .route('/all-users')
@@ -14,6 +14,6 @@ module.exports = (router) => {
         .route('/delete-user')
         .delete(loggedIn, userCtrl.deleteUser);
     router
-        .route('/dtest')
-        .delete(userCtrl.dTest);
+        .route('/create-user')
+        .post(userCtrl.createUser);
 }

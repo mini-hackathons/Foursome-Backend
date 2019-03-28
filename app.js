@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express       = require('express');
 const app           = express();
 
@@ -21,6 +22,7 @@ app.use(cors({
 }));
 app.use(morgan('dev'));                 // log every request to the console
 app.use(cookieParser());                // read cookies (needed for auth)
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());             // get information from html forms
 
 // DATABASE
@@ -29,6 +31,7 @@ const db = mongoose.connection;
 // AUTHENTICATION
 app.use(session({
     secret: '123',                      // session secret
+    // name: 'closet-cookie',
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: db })

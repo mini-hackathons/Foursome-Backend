@@ -1,17 +1,26 @@
 const mongoose = require('mongoose');
 
-let ItemSchema = new mongoose.Schema(
+let AssetSchema = new mongoose.Schema(
     {
+        _id: mongoose.Schema.Types.ObjectId,
         name: {
             type: String,
             required: true,
             maxLength: 45,
             minLength: 1
         },
+        owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
         description: {
             type: String,
             maxLength: 500,
             minLength: 1
+        },
+        imageUrl: {
+            type: String,
+            required: true
         },
         price: { 
             type: Number,
@@ -24,4 +33,4 @@ let ItemSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model('Item', ItemSchema);
+module.exports = mongoose.model('Asset', AssetSchema);

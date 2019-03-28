@@ -33,7 +33,7 @@ let UserSchema = new mongoose.Schema(
         inventory: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Item'
+                ref: 'Asset'
             }
         ],
         // posts: [
