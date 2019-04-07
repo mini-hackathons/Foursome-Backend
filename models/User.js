@@ -4,9 +4,13 @@ const saltRounds = 11;
 
 let UserSchema = new mongoose.Schema(
     {
+        facebookId: {
+            type: String,
+            unique: true
+        },
         email: {
             type: String,
-            required: true,
+            // required: true,
             unique: true,
         },
         username: {
@@ -18,7 +22,7 @@ let UserSchema = new mongoose.Schema(
         },
         password: { 
             type: String,
-            required: true,
+            // required: true,
             maxLength: 45,
             minLength: 1
         },

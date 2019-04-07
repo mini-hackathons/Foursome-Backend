@@ -8,7 +8,35 @@ const uuidv4 = require('uuid/v4');
 const mailer = require('../util/email');
 const crud = require('../util/crud');
 
+const jwt = require('jsonwebtoken');
+const publicKey = process.env.JWT_PUBLIC_KEY.replace(/\\n/g, '\n');
+const privateKey = process.env.JWT_PRIVATE_KEY.replace(/\\n/g, '\n');
+
 module.exports = {
+    facebookCallback: (req, res) => {
+        res.send('Thank you for logging in.')
+    },
+    jwt: (req, res) => {
+        const payload = {
+            userId: 'Daniel'
+        };
+
+        const i = 'Foursome';
+        const s = 'Daniel';
+        const a = 'FoursomeApp'
+        const signOptions = {
+            issuer: i,
+            subject: s,
+            audience: a,
+            expiresIn: '7d',
+            algorithm: 'RS256'
+        }
+
+        const token = jwt.sign(payload, privateKey, signOptions);
+        console.log(token);
+
+        res.send(token)
+    },
     a: async (req, res) => {
         try {
             // const test = new Test({ name: 'test', _id: ObjectId('123')});
