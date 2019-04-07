@@ -28,8 +28,6 @@ module.exports = (passport) => {
                 await newUser.save();
                 user = await User.findOne({ facebookId: profile.id });
             }
-
-            console.log(user);
             return cb(err, user);
         }catch(err) {
             console.log(err);
