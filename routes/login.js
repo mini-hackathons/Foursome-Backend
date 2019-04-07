@@ -5,13 +5,13 @@ const loginCtrl = require('../controllers/loginCtrl');
 const { loggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
-    // router
-    //     .route('/login/facebook-login')
-    //     .get(passport.authenticate('facebook'));
+    router
+        .route('/login/facebook-login')
+        .get(passport.authenticate('facebook'));
 
-    // router
-    //     .route('/login/facebook-callback')
-    //     .get(loginCtrl.facebookCallback);
+    router
+        .route('/login/facebook-callback')
+        .get(loginCtrl.facebookCallback);
 
     router
         .route('/jwt')
