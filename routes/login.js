@@ -6,6 +6,12 @@ const { loggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
+	.route('/login/verify-jwt')
+	.post(loginCtrl.verifyJwt);
+    router
+	.route('/login/get-fb-jwt')
+	.post(loginCtrl.getFBJwt);
+    router
         .route('/login/facebook-login')
         .get(passport.authenticate('facebook'));
 

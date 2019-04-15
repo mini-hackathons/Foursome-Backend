@@ -6,15 +6,52 @@ const Test = require('../models/Test');
 const passport = require('passport');
 const uuidv4 = require('uuid/v4');
 const mailer = require('../util/email');
+const jwt = require('../util/jwt');
 const crud = require('../util/crud');
 
-const jwt = require('jsonwebtoken');
-const publicKey = process.env.JWT_PUBLIC_KEY.replace(/\\n/g, '\n');
-const privateKey = process.env.JWT_PRIVATE_KEY.replace(/\\n/g, '\n');
+const axios = require('axios');
 
 module.exports = {
+    verifyJwt: async(req, res) => {
+	const { jwt } = req.body;
+	const { userId } = await jwt.verifyJwt(jwt);
+    },
+    getFBJwt: async (req, res) => {
+        const { inputToken, fbId } = req.body;
+	console.log(fbId);
+
+	try{
+            const fbRes = await axios.get(`https://graph.facebook.com/debug_token?input_token=${inputToken}&access_token=2330978563812210|CP2gkbSpAacivV73crP6bJ7WCms`);
+	    const { is_valid, app_id, user_id } = fbRes.data.data;
+	    console.log(is_valid);
+	    console.log(app_id === process.env.FB_APP_ID);
+console.log(user_id);
+	    if(is_valid && app_id === process.env.FB_APP_ID && user_id === fbId){
+		let dbId = await User.find({ facebookId: fbId }).select('_id');
+console.log('--------------------');
+console.log(dbId);
+		if(!dbId) {
+		    const user = new User({ facebookId: fbid });
+		    const newUser = await user.save()
+		    dbId = newUser._id;
+console.log('------------------');
+console.log(dbId);
+		}
+		jwt.createAndSendJwt(
+		    {
+			userId: dbId,
+			facebookId: fbId
+		    }, res);
+	    }else{
+		throw new Error('Invalid user input token!');
+	    }
+	}catch(err) {
+	    console.log(err);
+	    res.status(502).send('Failed');
+	}
+    },
     facebookCallback: (req, res) => {
-        res.send('Thank you for logging in.')
+	res.status(200).send('Thank you for logging in.')
     },
     jwt: (req, res) => {
         const payload = {
