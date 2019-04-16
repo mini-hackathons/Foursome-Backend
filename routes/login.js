@@ -2,15 +2,18 @@ const passport = require('passport');
 // const upload = multer({ dest: 'uploads/' });
 const loginCtrl = require('../controllers/loginCtrl');
 
-const { loggedIn } = require('../util/customMiddleware');
+const { login, loggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
-	.route('/login/verify-jwt')
-	.post(loginCtrl.verifyJwt);
+		.route('/login/verify-jwt')
+		.post(
+			login,
+			loginCtrl.verifyJwt
+		);
     router
-	.route('/login/get-fb-jwt')
-	.post(loginCtrl.getFBJwt);
+		.route('/login/get-fb-jwt')
+		.post(loginCtrl.getFBJwt);
     router
         .route('/login/facebook-login')
         .get(passport.authenticate('facebook'));

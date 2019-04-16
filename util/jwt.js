@@ -14,14 +14,19 @@ const signOptions = {
 }
 
 module.exports = {
-    createAndSendJwt: (payload, res) => {
+    createAndSendToken: (payload, res) => {
+	console.log('In createAndSendJwt');
         const token = jwt.sign(payload, privateKey, signOptions);
         console.log(token);
 console.log('token');
         res.send(token)
     },
-    verifyJwt: (jwt) => {
-	const payload = jwt.verify(token, publicKey, signOptions);
+    verifyToken: async (token) => {
+console.log('Verifying');
+	const payload = await jwt.verify(token, publicKey, signOptions);
 	return payload;
+    },
+    a: () => {
+	console.log('In a');
     }
 }

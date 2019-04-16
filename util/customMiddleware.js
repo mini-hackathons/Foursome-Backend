@@ -1,12 +1,28 @@
-const idConstructor = require('mongoose').Types.ObjectId;
+const { verifyToken } = require('./jwt');
 
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  });
+});
+
+const idConstructor = require('mongoose').Types.ObjectId;
 
 module.exports = {
+	login: (req, res, next) => {
+		const { token } = req.body;
+		const payload = verifyToken(token);
+
+		console.log('Login Middleware');
+		console.log(payload);
+
+		if(payload) {
+			req.user = payload.user;
+			next();
+		}else {
+			console.log('Successfully logged in');
+		}
+	},
     loggedIn: (req, res, next) => {
         // console.log('About to run loggedIn----------------');
         // console.log(req.cookies)

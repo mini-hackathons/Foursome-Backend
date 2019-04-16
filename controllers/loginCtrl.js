@@ -6,15 +6,23 @@ const Test = require('../models/Test');
 const passport = require('passport');
 const uuidv4 = require('uuid/v4');
 const mailer = require('../util/email');
-const jwt = require('../util/jwt');
+const jwtSigner = require('../util/jwt');
 const crud = require('../util/crud');
 
 const axios = require('axios');
 
 module.exports = {
     verifyJwt: async(req, res) => {
-	const { jwt } = req.body;
-	const { userId } = await jwt.verifyJwt(jwt);
+		try {
+	    	const { token } = req.body;
+		    const payload = await jwtSigner.verifyToken(token);
+
+		    console.log(payload);
+
+		    res.status(200).send('Successfully verified JWT');
+		}catch(err) {
+	    	console.log(err);
+		}
     },
     getFBJwt: async (req, res) => {
         const { inputToken, fbId } = req.body;
@@ -27,20 +35,21 @@ module.exports = {
 	    console.log(app_id === process.env.FB_APP_ID);
 console.log(user_id);
 	    if(is_valid && app_id === process.env.FB_APP_ID && user_id === fbId){
-		let dbId = await User.find({ facebookId: fbId }).select('_id');
+		let userDoc = await User.findOne({ facebookId: fbId }).select('_id');
 console.log('--------------------');
-console.log(dbId);
-		if(!dbId) {
-		    const user = new User({ facebookId: fbid });
-		    const newUser = await user.save()
-		    dbId = newUser._id;
+console.log(userDoc);
+		if(!userDoc) {
+		    const user = new User({ facebookId: fbId });
+		    const userDoc = await user.save();
 console.log('------------------');
 console.log(dbId);
 		}
-		jwt.createAndSendJwt(
+		jwtSigner.createAndSendToken(
 		    {
-			userId: dbId,
-			facebookId: fbId
+			user: {
+			    userId: userDoc._id,
+                            facebookId: fbId
+			}
 		    }, res);
 	    }else{
 		throw new Error('Invalid user input token!');

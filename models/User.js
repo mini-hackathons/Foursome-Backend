@@ -54,12 +54,14 @@ let UserSchema = new mongoose.Schema(
     }
 );
 
+/*
 UserSchema.pre('save', async function(next) {
     const hash = await bcrypt.hash(this.password, saltRounds);
     this.password = hash;
 
     next();
 });
+*/
 
 UserSchema.methods.waitToSignin = function() {
     return 500 < Date.now() - this.lastSigninAttempt;
