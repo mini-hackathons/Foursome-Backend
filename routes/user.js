@@ -16,4 +16,8 @@ module.exports = (router) => {
     router
         .route('/create-user')
         .post(userCtrl.createUser);
+
+    router
+        .route('/update-location')
+        .post(userCtrl.updateLocation);
 }

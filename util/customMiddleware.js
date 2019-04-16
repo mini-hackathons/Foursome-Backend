@@ -9,27 +9,44 @@ const s3 = new AWS.S3({
 const idConstructor = require('mongoose').Types.ObjectId;
 
 module.exports = {
+    // Middleware used for all routes
+    // Attempt to login user
+    // and call next() regardless of success
 	login: (req, res, next) => {
-		const { token } = req.body;
-		const payload = verifyToken(token);
+        const { token } = req.body;
 
-		console.log('Login Middleware');
-		console.log(payload);
+        // No attempt to login
+        if(!token) {
+            console.log('Did not log in');
+            next();
+        }
 
-		if(payload) {
-			req.user = payload.user;
-			next();
-		}else {
-			console.log('Successfully logged in');
-		}
+        try{
+            const payload = await verifyToken(token);
+            console.log('Login Middleware');
+            console.log(payload);
+
+            // Logged in
+            if(payload.user) {
+                console.log('Successfully logged in');
+                req.user = payload.user;
+            }else {
+            // Invalid attempt to login
+                console.log('Could not Log in');
+            }
+        }catch(err) {
+            console.log(err);
+        }
+        
+        // Always call next()
+        console.log('Calling next from login middleware');
+        next();
 	},
     loggedIn: (req, res, next) => {
-        // console.log('About to run loggedIn----------------');
-        // console.log(req.cookies)
         if (req.user) {
             next();
-        } else {
-            console.log('Failed to log in')
+        }else {
+            console.log('Not logged in')
             res.status(401).send('Please login');
         }
     },

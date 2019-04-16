@@ -16,5 +16,11 @@ module.exports = {
 
         const user = new User({ email, password });
         crud.create(res, user);
+    },
+    updateLocation: (req, res) => {
+        const { location } = req.body;
+
+        console.log('In update location route');
+        console.log(location);
     }
 }

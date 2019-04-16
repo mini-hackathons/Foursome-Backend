@@ -14,19 +14,31 @@ const signOptions = {
 }
 
 module.exports = {
-    createAndSendToken: (payload, res) => {
-	console.log('In createAndSendJwt');
-        const token = jwt.sign(payload, privateKey, signOptions);
-        console.log(token);
-console.log('token');
-        res.send(token)
+    createAndSendToken: async (payload, res) => {
+        try {
+            console.log('In createAndSendJwt');
+            const token = await jwt.sign(payload, privateKey, signOptions);
+            console.log(token);
+            
+            console.log('token');
+            res.send(token)
+        }catch(err) {
+            console.log(err);
+            res.status(500).send('Could not create token');
+        }
     },
     verifyToken: async (token) => {
-console.log('Verifying');
-	const payload = await jwt.verify(token, publicKey, signOptions);
-	return payload;
+        try{
+            console.log('Verifying');
+            const payload = await jwt.verify(token, publicKey, signOptions);
+
+            return payload;
+        }catch(err) {
+            console.log(err);
+            res.status(500).send('Could not verify JWT');
+        }
     },
     a: () => {
-	console.log('In a');
+        console.log('In a');
     }
 }
