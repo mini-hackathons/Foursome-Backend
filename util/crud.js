@@ -39,6 +39,24 @@ module.exports = {
             });
         }
     },
+    update: async(res, model, query, update) => {
+        try {
+            const updateResult = await model.updateOne(
+                query,
+                update
+            );
+
+            res.status(200).send({
+                response: 'Document successfully Updated!',
+                data: updateResult
+            });
+        }catch(err) {
+            res.status(401).send({
+                error: err.name,
+                message: err.message
+            });
+        }
+    },
     // Set selection to null to return all values
     findAndPopulate: async(res, model, id, property, selection) => {
         try {

@@ -22,5 +22,15 @@ module.exports = {
 
         console.log('In update location route');
         console.log(location);
+
+        const query = { ...req.user };
+        console.log(query)
+        const update = {
+            location: {
+                type: 'Point',
+                coordinates: [location, long, location.lat]
+            }
+        };
+        crud.update(res, User, query, update);
     }
 }

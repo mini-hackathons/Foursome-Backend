@@ -4,21 +4,25 @@ const saltRounds = 11;
 
 let UserSchema = new mongoose.Schema(
     {
-        facebookId: {
-            type: String,
-            unique: true
-        },
-        email: {
-            type: String,
-            // required: true,
-            unique: true,
-        },
         username: {
             type: String,
             unique: true,
             sparse: true,
             maxLength: 45,
             minLength: 1
+        },
+        facebookId: {
+            type: String,
+            unique: true
+        },
+        location: {
+            type: { type: String },
+            coordinates: []
+        },
+        email: {
+            type: String,
+            // required: true,
+            unique: true,
         },
         password: { 
             type: String,
@@ -53,6 +57,8 @@ let UserSchema = new mongoose.Schema(
         timestamps: { createdAt: true, updatedAt: false }
     }
 );
+
+UserSchema.index({ location: "2dsphere" });
 
 /*
 UserSchema.pre('save', async function(next) {
