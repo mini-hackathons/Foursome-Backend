@@ -18,7 +18,7 @@ module.exports = {
         // No attempt to login
         if(!token) {
             console.log('Did not log in');
-            next();
+            return next();
         }
 
         try{
