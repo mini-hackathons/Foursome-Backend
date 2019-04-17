@@ -12,7 +12,7 @@ module.exports = {
     // Middleware used for all routes
     // Attempt to login user
     // and call next() regardless of success
-	login: (req, res, next) => {
+	login: async (req, res, next) => {
         const { token } = req.body;
 
         // No attempt to login
