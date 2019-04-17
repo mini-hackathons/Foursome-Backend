@@ -14,7 +14,9 @@ const axios = require('axios');
 module.exports = {
     verifyJwt: async(req, res) => {
 		try {
-	    	const { token } = req.body;
+            const { token } = req.body;
+            
+            if(!token) throw new Error('No jwt found');
 		    const payload = await jwtSigner.verifyToken(token);
 
 		    console.log(payload);
@@ -33,17 +35,20 @@ module.exports = {
 	    const { is_valid, app_id, user_id } = fbRes.data.data;
 	    console.log(is_valid);
 	    console.log(app_id === process.env.FB_APP_ID);
-console.log(user_id);
-	    if(is_valid && app_id === process.env.FB_APP_ID && user_id === fbId){
+        console.log(user_id);
+        
+        if(is_valid && app_id === process.env.FB_APP_ID && user_id === fbId){
 		let userDoc = await User.findOne({ facebookId: fbId }).select('_id');
-console.log('--------------------');
-console.log(userDoc);
-		if(!userDoc) {
+        console.log('--------------------');
+        console.log(userDoc);
+        
+        if(!userDoc) {
 		    const user = new User({ facebookId: fbId });
 		    const userDoc = await user.save();
-console.log('------------------');
-console.log(dbId);
-		}
+            console.log('------------------');
+            console.log(dbId);
+        }
+        
 		jwtSigner.createAndSendToken(
 		    {
 			user: {

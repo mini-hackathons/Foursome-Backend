@@ -28,7 +28,7 @@ module.exports = {
         const update = {
             location: {
                 type: 'Point',
-                coordinates: [location, long, location.lat]
+                coordinates: [location.long, location.lat]
             }
         };
         crud.update(res, User, query, update);
