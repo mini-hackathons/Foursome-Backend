@@ -12,9 +12,14 @@ module.exports = {
         crud.delete(res, User, req.user.id);
     },
     createUser: (req, res) => {
-        const { email, password } = req.body;
+        const { email, password, location } = req.body;
 
-        const user = new User({ email, password });
+        const user = new User({ email, password,
+            location: {
+                type: 'Point',
+                coordinates: [ location.long, location.lat ]
+            }
+        });
         crud.create(res, user);
     },
     updateLocation: (req, res) => {
