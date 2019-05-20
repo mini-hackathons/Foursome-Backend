@@ -1,10 +1,10 @@
 const userCtrl = require('../controllers/userCtrl');
-const { loggedIn } = require('../util/customMiddleware');
+const { isAuthenticated } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
         .route('/profile')
-        .get(loggedIn, userCtrl.getProfile);
+        .get(isAuthenticated, userCtrl.getProfile);
 
     router
         .route('/all-users')
@@ -12,7 +12,7 @@ module.exports = (router) => {
 
     router
         .route('/delete-user')
-        .delete(loggedIn, userCtrl.deleteUser);
+        .delete(isAuthenticated, userCtrl.deleteUser);
     router
         .route('/create-user')
         .post(userCtrl.createUser);

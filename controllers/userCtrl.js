@@ -75,14 +75,15 @@ module.exports = {
     getNearbyUsers: async(req, res) => {
         try{
             const { radius } = req.body;
+            console.log("USER----------------------------")
             console.log(req.user);
             const currentUser = await User.findOne(req.user);
             console.log(currentUser)
-            const { location, otherUsers, passedUsers } = currentUser;
+            const { location, likedUsers, passedUsers } = currentUser;
 
             console.log('-----------');
             console.log(location)
-            console.log(otherUsers)
+            console.log(likedUsers)
             console.log(passedUsers)
             console.log('-----------');
 
@@ -99,9 +100,9 @@ module.exports = {
 
             const newUsers = nearbyUsers.filter(
                 user =>
-                    !otherUsers.get(user._id) &&
+                    !likedUsers.get(user._id) &&
                     !passedUsers.get(user._id) &&
-                    user._id.equals(currentUser._id)                    
+                    !user._id.equals(currentUser._id)                    
             )
     
             res.status(200).send({

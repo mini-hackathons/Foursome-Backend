@@ -33,7 +33,7 @@ let UserSchema = new mongoose.Schema(
                 default: undefined
             }
         },
-        matcheList: [
+        matchList: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'

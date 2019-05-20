@@ -12,7 +12,7 @@ module.exports = {
     // Middleware used for all routes
     // Attempt to login user
     // and call next() regardless of success
-	login: async (req, res, next) => {
+	authenticate: async (req, res, next) => {
         const { token } = req.body;
 
         // No attempt to login
@@ -40,9 +40,9 @@ module.exports = {
         
         // Always call next()
         console.log('Calling next from login middleware');
-        next();
+        return next();
 	},
-    loggedIn: (req, res, next) => {
+    isAuthenticated: (req, res, next) => {
         if (req.user) {
             next();
         }else {

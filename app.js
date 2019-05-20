@@ -13,7 +13,7 @@ const mongoose      = require('mongoose');
 const MongoStore    = require('connect-mongo')(session);
 const flash         = require('connect-flash');
 
-const { login }     = require('./util/customMiddleware');
+const { authenticate }     = require('./util/customMiddleware');
 
 
 // MIDDLEWARE
@@ -26,7 +26,7 @@ app.use(morgan('dev'));                 // log every request to the console
 app.use(cookieParser());                // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());             // get information from html forms
-app.use(login);
+app.use(authenticate);
 
 // DATABASE
 const db = mongoose.connection;
