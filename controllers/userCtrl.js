@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const crud = require('../util/crud');
+const MILES2METERS = 1609.344;
 
 module.exports = {
     getProfile: (req, res) => {
@@ -80,6 +81,7 @@ module.exports = {
     getNearbyUsers: async(req, res) => {
         try{
             const { radius } = req.body;
+            const radiusMeters = MILES2METERS * radius;
             console.log("USER----------------------------")
             console.log(req.user);
             const currentUser = await User.findOne(req.user);
@@ -95,7 +97,7 @@ module.exports = {
             const nearbyUsers = await User.find({
                 location: {
                     $near: {
-                        $maxDistance: radius,
+                        $maxDistance: radiusMeters,
                         $geometry: location
                     }
                 }
