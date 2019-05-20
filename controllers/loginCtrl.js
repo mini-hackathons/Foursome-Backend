@@ -26,46 +26,69 @@ module.exports = {
 	    	console.log(err);
 		}
     },
+    getTestJwt: async(req, res) => {
+        const { username } = req.body;
+
+        try {
+            let userDoc = await User.findOne({ username }).select('_id');
+            if(!userDoc){
+                const user = new User({
+                    username
+                });
+                userDoc = await user.save();
+            }
+
+            jwtSigner.createAndSendToken(
+                {
+                    user: {
+                        _id: userDoc._id
+                    }
+                }, res);
+        }catch(err) {
+            console.log(err);
+            res.status(502).send(err);
+        }
+    },
     getFBJwt: async (req, res) => {
         const { inputToken, fbId } = req.body;
-	console.log(fbId);
+        console.log(fbId);
 
-	try{
+        try{
             const fbRes = await axios.get(`https://graph.facebook.com/debug_token?input_token=${inputToken}&access_token=2330978563812210|CP2gkbSpAacivV73crP6bJ7WCms`);
-	    const { is_valid, app_id, user_id } = fbRes.data.data;
-	    console.log(is_valid);
-	    console.log(app_id === process.env.FB_APP_ID);
-        console.log(user_id);
-        
-        if(is_valid && app_id === process.env.FB_APP_ID && user_id === fbId){
-		let userDoc = await User.findOne({ facebookId: fbId }).select('_id');
-        console.log('--------------------');
-        console.log(userDoc);
-        
-        if(!userDoc) {
-		    const user = new User({ facebookId: fbId });
-		    const userDoc = await user.save();
-            console.log('------------------');
-            console.log(dbId);
-        }
-        
-		jwtSigner.createAndSendToken(
-		    {
-			user: {
-			    userId: userDoc._id,
+            const { is_valid, app_id, user_id } = fbRes.data.data;
+            console.log(is_valid);
+            console.log(app_id === process.env.FB_APP_ID);
+            console.log(user_id);
+            
+            if(is_valid && app_id === process.env.FB_APP_ID && user_id === fbId){
+                let userDoc = await User.findOne({ facebookId: fbId }).select('_id');
+                console.log('--------------------');
+                console.log(userDoc);
+                
+                if(!userDoc) {
+                    const user = new User({ facebookId: fbId });
+                    userDoc = await user.save();
+                    console.log('------------------');
+                    console.log(dbId);
+                }
+                
+                jwtSigner.createAndSendToken(
+                    {
+                        user: {
+                            _id: userDoc._id,
                             facebookId: fbId
-			}
-		    }, res);
-	    }else{
-		throw new Error('Invalid user input token!');
-	    }
-	}catch(err) {
-	    console.log(err);
-	    res.status(502).send('Failed');
-	}
+                        }
+                    }, res);
+            }else{
+                throw new Error('Invalid user input token!');
+            }
+        }catch(err) {
+            console.log(err);
+            res.status(502).send('Failed');
+        }
     },
     facebookCallback: (req, res) => {
-	res.status(200).send('Thank you for logging in.')
+	    res.status(200).send('Thank you for logging in.')
     },
     jwt: (req, res) => {
         const payload = {

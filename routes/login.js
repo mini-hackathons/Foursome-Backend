@@ -6,6 +6,10 @@ const { login, loggedIn } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
+        .route('/login/get-test-jwt')
+        .post(loginCtrl.getTestJwt);
+        
+    router
 		.route('/login/verify-jwt')
 		.post(
 			loginCtrl.verifyJwt

@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
+let SwipeSchema = new mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        swipeDate: Date
+    }
+)
+
 let UserSchema = new mongoose.Schema(
     {
         username: {
@@ -13,16 +23,37 @@ let UserSchema = new mongoose.Schema(
         },
         facebookId: {
             type: String,
-            unique: true
+            unique: true,
+            sparse: true
         },
         location: {
             type: { type: String },
-            coordinates: []
+            coordinates: {
+                type: [Number],
+                default: undefined
+            }
+        },
+        matcheList: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
+        likedUsers: {
+            type: Map,
+            of: Date,
+            default: {}
+        },
+        passedUsers: {
+            type: Map,
+            of: Date,
+            default: {}
         },
         email: {
             type: String,
             // required: true,
             unique: true,
+            sparse: true
         },
         password: { 
             type: String,
@@ -59,6 +90,13 @@ let UserSchema = new mongoose.Schema(
 );
 
 UserSchema.index({ location: "2dsphere" });
+
+// UserSchema.pre('save', function (next) {
+//     if (!this.timestamps.createdAt && Array.isArray(this.location.coordinates) && this.location.length === 0) {
+//       this.location.coordinates = [];
+//     }
+//     next();
+// })
 
 /*
 UserSchema.pre('save', async function(next) {

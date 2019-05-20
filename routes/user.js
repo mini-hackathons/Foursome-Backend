@@ -18,6 +18,17 @@ module.exports = (router) => {
         .post(userCtrl.createUser);
 
     router
+        .route('/like-user')
+        .post(userCtrl.likeUser);
+    router
+        .route('/pass-user')
+        .post(userCtrl.passUser);
+
+    router
         .route('/update-location')
         .post(userCtrl.updateLocation);
+    
+    router
+        .route('/get-nearby-users')
+        .post(userCtrl.getNearbyUsers);
 }

@@ -39,8 +39,25 @@ module.exports = {
             });
         }
     },
+    updateAndReturn: async(model, query, update) => {
+        try {
+            console.log('In Update method');
+            console.log(query);
+            console.log(update);
+            const updateResult = await model.updateOne(
+                query,
+                update
+            );
+            return updateResult;
+        }catch(err) {
+            console.log(err);
+        }
+    },
     update: async(res, model, query, update) => {
         try {
+            console.log('In Update method');
+            console.log(query);
+            console.log(update);
             const updateResult = await model.updateOne(
                 query,
                 update
@@ -51,6 +68,7 @@ module.exports = {
                 data: updateResult
             });
         }catch(err) {
+            console.log(err);
             res.status(401).send({
                 error: err.name,
                 message: err.message
