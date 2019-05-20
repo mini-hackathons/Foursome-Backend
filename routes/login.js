@@ -2,7 +2,7 @@ const passport = require('passport');
 // const upload = multer({ dest: 'uploads/' });
 const loginCtrl = require('../controllers/loginCtrl');
 
-const { login, loggedIn } = require('../util/customMiddleware');
+const { isAuthenticated } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
@@ -36,7 +36,7 @@ module.exports = (router) => {
     router
         .route('/test')
         .post(
-            loggedIn,
+            isAuthenticated,
             loginCtrl.test
         );
 
