@@ -86,12 +86,10 @@ module.exports = {
             console.log(req.user);
             const currentUser = await User.findOne(req.user);
             console.log(currentUser)
-            const { location, likedUsers, passedUsers } = currentUser;
+            const { location } = currentUser;
 
             console.log('-----------');
             console.log(location)
-            console.log(likedUsers)
-            console.log(passedUsers)
             console.log('-----------');
 
             const nearbyUsers = await User.find({
@@ -106,15 +104,14 @@ module.exports = {
             console.log(nearbyUsers);
             
             console.log('----')
-            console.log(`likedUsers.${nearbyUsers[1]._id}`);
-            console.log(currentUser.get(`likedUsers.${nearbyUsers[1]._id}`))
+            // console.log(`likedUsers.${nearbyUsers[1]._id}`);
+            // console.log(currentUser.get(`likedUsers.${nearbyUsers[1]._id}`))
             console.log('----')
-            throw new Error();
 
             let newUsers = nearbyUsers.filter(
                 user =>
-                    !likedUsers.get(user._id) &&
-                    !passedUsers.get(user._id) &&
+                    !currentUser.get(`likedUsers.${user._id}`) &&
+                    !currentUser.get(`passedUsers.${user._id}`) &&
                     !user._id.equals(currentUser._id)                    
             )
 
