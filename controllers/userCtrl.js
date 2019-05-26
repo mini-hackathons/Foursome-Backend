@@ -66,12 +66,12 @@ module.exports = {
         });
     },
     passUser: async(req, res) => {
-        const { passedUserId } = req.body;
+        const { otherUserId } = req.body;
 
         // Update passedUsers map
         // and save
         const currentUser = await User.findOne(req.user);
-        currentUser.passedUsers.set(passedUserId, Date.now());
+        currentUser.passedUsers.set(otherUserId, Date.now());
         const save = await currentUser.save();
 
         res.status(200).send({
