@@ -104,6 +104,10 @@ module.exports = {
             }).select('_id');
             
             console.log(nearbyUsers);
+            
+            console.log('----')
+            console.log(!likedUsers.get(user._id))
+            console.log('----')
 
             let newUsers = nearbyUsers.filter(
                 user =>
