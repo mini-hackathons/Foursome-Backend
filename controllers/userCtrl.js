@@ -106,7 +106,7 @@ module.exports = {
             console.log(nearbyUsers);
             
             console.log('----')
-            console.log(currentUser.get(`likedUsers.${nearbyUsers[0]._id}`))
+            console.log(currentUser.get(`likedUsers.5ce2734b8f289f66b9f42a64`))
             console.log('----')
             throw new Error();
 
