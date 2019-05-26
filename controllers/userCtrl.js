@@ -39,7 +39,7 @@ module.exports = {
         crud.update(res, User, query, update);
     },
     likeUser: async(req, res) => {
-        const { currentUserId } = req.user;
+        const { _id: currentUserId } = req.user;
         const { otherUserId } = req.body;
 
         let resData = {};
