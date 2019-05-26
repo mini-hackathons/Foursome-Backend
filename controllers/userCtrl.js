@@ -105,12 +105,14 @@ module.exports = {
             
             console.log(nearbyUsers);
 
-            const newUsers = nearbyUsers.filter(
+            let newUsers = nearbyUsers.filter(
                 user =>
                     !likedUsers.get(user._id) &&
                     !passedUsers.get(user._id) &&
                     !user._id.equals(currentUser._id)                    
             )
+
+            if(newUsers.length === 0) newUsers = 'None'
     
             res.status(200).send({
                 data: newUsers
