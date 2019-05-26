@@ -106,8 +106,9 @@ module.exports = {
             console.log(nearbyUsers);
             
             console.log('----')
-            console.log(!likedUsers.get(nearbyUsers[0]._id))
+            console.log(likedUsers.get(nearbyUsers[0]._id))
             console.log('----')
+            throw new Error();
 
             let newUsers = nearbyUsers.filter(
                 user =>
