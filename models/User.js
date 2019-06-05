@@ -40,15 +40,23 @@ let UserSchema = new mongoose.Schema(
             }
         ],
         likedUsers: {
-            type: Map,
-            of: Date,
+            type: mongoose.Schema.Types.Mixed,
             default: {}
         },
         passedUsers: {
-            type: Map,
-            of: Date,
+            type: mongoose.Schema.Types.Mixed,
             default: {}
         },
+        // likedUsers: {
+        //     type: Map,
+        //     of: Date,
+        //     default: {}
+        // },
+        // passedUsers: {
+        //     type: Map,
+        //     of: Date,
+        //     default: {}
+        // },
         email: {
             type: String,
             // required: true,

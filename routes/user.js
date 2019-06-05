@@ -3,6 +3,10 @@ const { isAuthenticated } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
+        .route('/test')
+        .get(userCtrl.test);
+
+    router
         .route('/profile')
         .get(isAuthenticated, userCtrl.getProfile);
 

@@ -33,7 +33,12 @@ module.exports = {
             let userDoc = await User.findOne({ username }).select('_id');
             if(!userDoc){
                 const user = new User({
-                    username
+                    username,
+                    // REMOVE THIS AFTER TESTING
+                    location: {
+                        type: 'Point',
+                        coordinates: [ -118.243683, 34.0522 ]
+                    }
                 });
                 userDoc = await user.save();
             }
