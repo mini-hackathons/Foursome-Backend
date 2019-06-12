@@ -3,8 +3,16 @@ const { isAuthenticated } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
+        .route('/create-test-chat')
+        .post(userCtrl.createTestChat);
+
+    router
         .route('/test')
-        .get(userCtrl.test);
+        .post(userCtrl.test);
+
+    router
+        .route('/get-chat-page')
+        .get(userCtrl.getChatPage);
 
     router
         .route('/profile')

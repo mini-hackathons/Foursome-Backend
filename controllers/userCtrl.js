@@ -1,18 +1,64 @@
 const User = require('../models/User');
+const Chat = require('../models/Chat');
 const crud = require('../util/crud');
 const MILES2METERS = 1609.344;
 
 
 module.exports = {
+    createTestChat: async (req, res) => {
+        const { _id: member } = req.user;
+
+        try {
+            const chat = await Chat.findOrCreate([ member ]);
+            console.log(chat);
+            
+            res.status(201).send(chat);
+        }catch(err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+    },
     test: async (req, res) => {
         try {
-            const a = "H";
-            const data = await User.find(
-                { likedUsers: "this.likedUsers.get(5cb8a33440713c3e9412cdb8)" }
-            )
-            res.status(200).send(data);
+            const { _id: author } = req.user;
+            const body = 'test body';
+            const chat = await Chat.findOrCreate([ author ]);
+            console.log(chat)
+            
+            for(let i = 0; i < 10; i++){
+                await chat.saveMessage(author, body+i);
+            }
+                
+            res.status(200).send('Successfully saved message!');
         }catch(err) {
             console.log(err)
+            res.status(400).send(err);
+        }
+    },
+    getChatPage: async (req, res) => {
+        const { _id: userId } = req.user;
+        let { pageNumbers } = req.body;
+
+        console.log(pageNumbers)
+
+        try{
+            const chat = await Chat.findOrCreate([ userId ]);
+
+            let messageList = [];
+            // First page may have fewer messages, so grab next page too
+            if(JSON.stringify(pageNumbers) === '[0]') pageNumbers = [ 0, 1 ];
+
+            pageNumbers.forEach(num => {
+                const messages = chat.getPage(num)
+                messageList = messageList.concat(messages);
+            });
+            
+            console.log(messageList);
+
+            res.status(200).send(messageList);
+
+        }catch(err) {
+            console.log(err);
             res.status(400).send(err);
         }
     },

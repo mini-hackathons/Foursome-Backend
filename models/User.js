@@ -47,6 +47,12 @@ let UserSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.Mixed,
             default: {}
         },
+        chats: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Chat'
+            }
+        ],
         // likedUsers: {
         //     type: Map,
         //     of: Date,
