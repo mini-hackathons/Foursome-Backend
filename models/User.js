@@ -47,6 +47,11 @@ let UserSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.Mixed,
             default: {}
         },
+        fcmIds: {
+            type: [ String ],
+            default: []
+        }
+        ,
         chats: [
             {
                 type: mongoose.Schema.Types.ObjectId,

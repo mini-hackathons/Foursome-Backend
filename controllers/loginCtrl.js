@@ -1,4 +1,3 @@
-const connection = require('../database');
 const User = require('../models/User');
 const Token = require('../models/Token');
 const Test = require('../models/Test');
@@ -12,6 +11,25 @@ const crud = require('../util/crud');
 const axios = require('axios');
 
 module.exports = {
+    testToken: async(req, res) => {
+        try {
+            let userDoc = await User.findOne({ username: 'Danny' }).select('_id');
+
+            const token = await jwtSigner.createToken(
+                {
+                    user: {
+                        _id: userDoc._id
+                    }
+                }
+            );
+            console.log(token)
+
+            res.status(200).send(token);
+        }catch(err) {
+            console.log(err);
+            res.status(400).send('Error');
+        }
+    },
     verifyJwt: async(req, res) => {
 		try {
             const { token } = req.body;

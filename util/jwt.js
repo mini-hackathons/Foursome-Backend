@@ -27,6 +27,23 @@ module.exports = {
             res.status(500).send('Could not create token');
         }
     },
+    createToken: async (payload) => {
+        try {
+            console.log('In createJwt');
+            console.time('jwt');
+            const token = await jwt.sign(payload, privateKey, signOptions);
+            console.timeEnd('jwt');
+
+            console.time('log');
+            console.log(token);
+            console.timeEnd('log');
+            
+            console.log('token');
+            return token;
+        }catch(err) {
+            console.log(err);
+        }
+    },
     verifyToken: async (token) => {
         try{
             console.log('Verifying');

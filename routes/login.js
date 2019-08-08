@@ -6,6 +6,10 @@ const { isAuthenticated } = require('../util/customMiddleware');
 
 module.exports = (router) => {
     router
+        .route('/login/test')
+        .post(loginCtrl.testToken);
+
+    router
         .route('/login/get-test-jwt')
         .post(loginCtrl.getTestJwt);
         
