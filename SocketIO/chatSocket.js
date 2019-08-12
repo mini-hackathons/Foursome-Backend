@@ -4,7 +4,7 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
     // LISTEN FOR EVENTS 
 
     socket.on('chat-message-from-sender', (data) => {
-        console.log(.socket.id);
+        console.log(socket.id);
         console.log(data);
         
         const onlineUsers = getOnlineUsers();
