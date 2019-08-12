@@ -12,6 +12,11 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
         const userId = data.userId;
         const userSocketIds = onlineUsers[userId];
 
+console.log('Online Users');
+console.log(onlineUsers);
+console.log('UserSocketIds');
+console.log(userSocketIds);
+
         // No open sockets
         if(!userSocketIds)
             console.log('Push Notif Chat');
@@ -20,7 +25,7 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
             console.log('Socket IO Chat');
 
             // Emit
-            userSocketIds.foreach(id => emitEvent(id, 'chat-message-to-recipient', data));
+            userSocketIds.forEach(id => emitEvent(id, 'chat-message-to-recipient', data));
         }
     });
 }
