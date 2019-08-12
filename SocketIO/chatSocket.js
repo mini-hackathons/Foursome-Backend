@@ -24,10 +24,3 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
         }
     });
 }
-
-// EMIT EVENTS
-
-emitMessage: (socket, data) => {
-
-
-}

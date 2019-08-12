@@ -52,7 +52,7 @@ module.exports = {
             return payload;
         }catch(err) {
             console.log(err);
-            res.status(500).send('Could not verify JWT');
+            return;
         }
     },
     a: () => {
