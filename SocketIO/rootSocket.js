@@ -69,6 +69,8 @@ module.exports = (server) => {
         
         require('./chatSocket')(socket, emitEvent, this.getOnlineUsers);
 
+        setInterval(() => console.log(this.getOnlineUsers()), 2000);
+
 
         io.on('disconnect', (reason) => {
             console.log('Disconnected');
