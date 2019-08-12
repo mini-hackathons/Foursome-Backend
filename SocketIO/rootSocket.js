@@ -13,6 +13,7 @@ const markUserOnline = async (user, socket) => {
     // await client.sadd(`onlineUsers:${userId}`, socketId);
 }
 const markUserOffline = async (socket) => {
+    console.log(socket);
     this.onlineUsers[socket.userId].delete(socket.id);
 
     // With Redis
@@ -68,7 +69,6 @@ module.exports = (server) => {
         }
         
         require('./chatSocket')(socket, emitEvent, this.getOnlineUsers);
-
 
         io.on('disconnect', (reason) => {
             console.log('Disconnected');
