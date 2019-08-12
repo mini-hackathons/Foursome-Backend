@@ -47,8 +47,9 @@ module.exports = (server) => {
                     console.log('Successfully verified token for SocketIO connection');
 
                     markUserOnline(user, socket);
+                    // Add userId to socket
+                    // Can use id to remove socketId from Active Sockets on Disconnect
                     socket.userId = user._id;
-                    console.log(user);
 
                     return next();
                 }
