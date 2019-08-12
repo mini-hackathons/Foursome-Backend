@@ -3,24 +3,24 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
     
     // LISTEN FOR EVENTS 
 
-    socket.on('chat-message-sender', (data) => {
+    socket.on('chat-message-init', (data) => {
         console.log(this.socket.id);
         console.log(data);
         
         const onlineUsers = getOnlineUsers();
 
         const userId = data.userId;
-        const socketIds = onlineUsers[userId];
+        const userSocketIds = onlineUsers[userId];
 
         // No open sockets
-        if(!socketIds)
+        if(!userSocketIds)
             console.log('Push Notif Chat');
         // Send to all open sockets
         else {
             console.log('Socket IO Chat');
 
             // Emit
-            socketIds.foreach(id => emitEvent(id, 'chat-message-recipient', data));
+            userSocketIds.foreach(id => emitEvent(id, 'chat-message-recipient', data));
         }
     });
 }
