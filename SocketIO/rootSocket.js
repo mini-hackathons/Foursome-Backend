@@ -13,6 +13,7 @@ const markUserOnline = async (user, socket) => {
     // await client.sadd(`onlineUsers:${userId}`, socketId);
 }
 const markUserOffline = async (socket) => {
+    console.log(socket);
     this.onlineUsers[socket.userId].delete(socket.id);
 
     // With Redis
