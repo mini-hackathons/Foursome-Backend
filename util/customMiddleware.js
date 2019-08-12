@@ -27,7 +27,7 @@ module.exports = {
             console.log(payload);
 
             // Logged in
-            if(payload.user) {
+            if(payload && payload.user) {
                 console.log('Successfully logged in');
                 req.user = payload.user;
             }else {
