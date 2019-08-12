@@ -47,6 +47,8 @@ module.exports = (server) => {
                     console.log('Successfully verified token for SocketIO connection');
 
                     markUserOnline(user, socket);
+                    socket.userId = user._id;
+                    console.log(user);
 
                     return next();
                 }
@@ -73,7 +75,7 @@ module.exports = (server) => {
         setInterval(() => console.log(this.getOnlineUsers()), 2000);
 
 
-        io.on('disconnect', (reason) => {
+        socket.on('disconnect', (reason) => {
             console.log('Disconnected');
     
             markUserOffline(socket);
