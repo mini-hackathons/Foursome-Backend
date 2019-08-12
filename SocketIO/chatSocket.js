@@ -3,7 +3,7 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
     
     // LISTEN FOR EVENTS 
 
-    socket.on('chat-message-init', (data) => {
+    socket.on('chat-message-from-sender', (data) => {
         console.log(this.socket.id);
         console.log(data);
         
@@ -20,7 +20,7 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
             console.log('Socket IO Chat');
 
             // Emit
-            userSocketIds.foreach(id => emitEvent(id, 'chat-message-recipient', data));
+            userSocketIds.foreach(id => emitEvent(id, 'chat-message-to-recipient', data));
         }
     });
 }
