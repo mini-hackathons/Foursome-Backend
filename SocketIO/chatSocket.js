@@ -46,11 +46,11 @@ console.log(userSocketIds);
     });
 }
 
-const pushToClient = async(data, fcmToken) => {
+const pushToClient = async(data) => {
     const fcmToken = await User.findById(userId).select('fcmToken');
     console.log('Fcm Token');
     console.log(fcmToken);
-    
+
     // Use Fcm to send to Client
     var message = {
         data,
