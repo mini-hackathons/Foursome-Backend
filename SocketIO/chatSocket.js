@@ -24,12 +24,8 @@ console.log(userSocketIds);
         if(!userSocketIds) {
             console.log('Push Notif Chat');
 
-            const fcmToken = await User.findById(userId).select('fcmToken');
-            console.log('Fcm Token');
-            console.log(fcmToken);
-
             try{
-                await pushToClient(data, fcmToken);
+                await pushToClient(data);
             }catch(err) {
                 console.log(err);
             }
@@ -39,7 +35,7 @@ console.log(userSocketIds);
             console.log('Socket IO Chat');
 
             try{
-                await pushToClient(data, fcmToken);
+                await pushToClient(data);
             }catch(err) {
                 console.log(err);
             }
@@ -51,6 +47,10 @@ console.log(userSocketIds);
 }
 
 const pushToClient = async(data, fcmToken) => {
+    const fcmToken = await User.findById(userId).select('fcmToken');
+    console.log('Fcm Token');
+    console.log(fcmToken);
+    
     // Use Fcm to send to Client
     var message = {
         data,
