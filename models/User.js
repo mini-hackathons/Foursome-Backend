@@ -48,8 +48,8 @@ let UserSchema = new mongoose.Schema(
             default: {}
         },
         fcmIds: {
-            type: [ String ],
-            default: []
+            type: String,
+            default: ''
         }
         ,
         chats: [
