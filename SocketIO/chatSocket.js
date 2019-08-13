@@ -1,5 +1,5 @@
 const User = require('../models/User');
-import * as admin from "firebase-admin";
+const admin = require("firebase-admin");
 
 module.exports = (socket, emitEvent, getOnlineUsers) => {
     console.log('Init Chat Socket');
@@ -28,30 +28,45 @@ console.log(userSocketIds);
             console.log('Fcm Token');
             console.log(fcmToken);
 
-            // Use Fcm to send to Client
-            var message = {
-                data,
-                token: fcmToken
-            };
-              
-            // Send a message to the device corresponding to the provided
-            // registration token.
-            try {
-                // Response is a message ID string.
-                const messageId = await admin.messaging().send(message)
-
-                console.log('Successfully sent message:', messageId);
-
+            try{
+                await pushToClient(data, fcmToken);
             }catch(err) {
-                console.log('Error sending message:', err);
+                console.log(err);
             }
 
         }else {
         // Send to all open sockets
             console.log('Socket IO Chat');
 
+            try{
+                await pushToClient(data, fcmToken);
+            }catch(err) {
+                console.log(err);
+            }
+
             // Emit
             userSocketIds.forEach(id => emitEvent(id, 'chat-message-to-recipient', data));
         }
     });
+}
+
+const pushToClient = async(data, fcmToken) => {
+    // Use Fcm to send to Client
+    var message = {
+        data,
+        token: fcmToken
+    };
+        
+    // Send a message to the device corresponding to the provided
+    // registration token.
+    try {
+        // Response is a message ID string.
+        const messageId = await admin.messaging().send(message)
+
+        console.log('Successfully sent message:', messageId);
+
+    }catch(err) {
+        console.log("Error with FCM");
+        console.log('Error sending message:', err);
+    }
 }
