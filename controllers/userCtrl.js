@@ -196,6 +196,7 @@ module.exports = {
             })
             .cursor()
 
+            // What happens when just populated with first user?
             for(let user = await cursor.next(); newUsers.length < MAX_USERS && user !== null; user = await cursor.next()){
                 // Check if user already swiped
                 if(!currentUser.likedUsers[user._id] &&

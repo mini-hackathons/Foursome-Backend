@@ -47,7 +47,7 @@ let UserSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.Mixed,
             default: {}
         },
-        fcmIds: {
+        fcmToken: {
             type: String,
             default: ''
         }
