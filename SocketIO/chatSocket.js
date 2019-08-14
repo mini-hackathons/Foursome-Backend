@@ -36,11 +36,11 @@ const sendMessageToUser = async(userId, msg) => {
 
         }else {
         // Send to all open sockets
-            
+        
             // Emit
+            console.log('Socket IO Chat');
             userSocketIds.forEach(id => this.emitEvent(id, 'chat-message-to-recipient', msg));
 
-            console.log('Socket IO Chat');
 
             try{
                 await pushToClient(userId, msg);
@@ -71,9 +71,11 @@ const pushToClient = async(userId, msg) => {
     // registration token.
     try {
         // Response is a message ID string.
-        const messageId = await admin.messaging().send(payload)
+        setInterval(() => {
+            const messageId = await admin.messaging().send(payload)
+            console.log('Successfully sent message:', messageId);
+        }, 2000);
 
-        console.log('Successfully sent message:', messageId);
 
     }catch(err) {
         console.log("Error with FCM");
