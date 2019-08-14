@@ -36,6 +36,10 @@ const sendMessageToUser = async(userId, msg) => {
 
         }else {
         // Send to all open sockets
+            
+            // Emit
+            userSocketIds.forEach(id => this.emitEvent(id, 'chat-message-to-recipient', msg));
+
             console.log('Socket IO Chat');
 
             try{
@@ -43,9 +47,6 @@ const sendMessageToUser = async(userId, msg) => {
             }catch(err) {
                 console.log(err);
             }
-
-            // Emit
-            userSocketIds.forEach(id => this.emitEvent(id, 'chat-message-to-recipient', msg));
         }
 }
 
