@@ -13,6 +13,9 @@ const mongoose      = require('mongoose');
 const MongoStore    = require('connect-mongo')(session);
 const flash         = require('connect-flash');
 
+// Init Firebase
+require("./Firebase/init")();
+
 const { authenticate }     = require('./util/customMiddleware');
 
 

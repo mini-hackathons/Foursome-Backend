@@ -8,8 +8,6 @@ const MONGO_PATH = process.env.MONGODB_URI || 'mongodb://localhost:27017/foursom
 require('./Databases/mongo')(MONGO_PATH);
 
 // require('./Databases/redis').init();
-require("./Firebase/init");
-
 
 
 server.listen(port, () => console.log(`Server listening on port ${port}!`));
