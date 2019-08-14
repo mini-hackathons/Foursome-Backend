@@ -55,7 +55,7 @@ const pushToClient = async(userId, msg) => {
     console.log('User');
     console.log(user);
 
-    const fcmToken = await User.findById(userId).select('fcmToken');
+    const { fcmToken } = await User.findById(userId).select('fcmToken');
     console.log('Fcm Token');
     console.log(fcmToken);
 
