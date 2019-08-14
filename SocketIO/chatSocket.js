@@ -71,7 +71,7 @@ const pushToClient = async(userId, msg) => {
     // registration token.
     try {
         // Response is a message ID string.
-        setInterval(() => {
+        setInterval(async() => {
             const messageId = await admin.messaging().send(payload)
             console.log('Successfully sent message:', messageId);
         }, 2000);
