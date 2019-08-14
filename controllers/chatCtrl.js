@@ -10,6 +10,7 @@ module.exports = {
 
         try {
 
+            console.log('Update Fcm Token route');
             console.log(req.user);
 
             const query = { _id: req.user._id };
