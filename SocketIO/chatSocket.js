@@ -50,6 +50,10 @@ const sendMessageToUser = async(userId, msg) => {
 }
 
 const pushToClient = async(userId, msg) => {
+    const user = await User.findById(userId);
+    console.log('User');
+    console.log(user);
+
     const fcmToken = await User.findById(userId).select('fcmToken');
     console.log('Fcm Token');
     console.log(fcmToken);
