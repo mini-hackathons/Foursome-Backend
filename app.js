@@ -13,7 +13,7 @@ const mongoose      = require('mongoose');
 const MongoStore    = require('connect-mongo')(session);
 const flash         = require('connect-flash');
 
-const initFirebaseAdmin = require("./Firebase/init");
+require("./Firebase/init");
 
 const { authenticate }     = require('./util/customMiddleware');
 
