@@ -13,6 +13,8 @@ const mongoose      = require('mongoose');
 const MongoStore    = require('connect-mongo')(session);
 const flash         = require('connect-flash');
 
+const initFirebaseAdmin = require("Firebase/init");
+
 const { authenticate }     = require('./util/customMiddleware');
 
 
@@ -52,5 +54,7 @@ const router = express.Router();
 app.use(router);
 const routes = require('./routes/index');
 routes(router);
+
+// Fcm Admin
 
 module.exports = app;
