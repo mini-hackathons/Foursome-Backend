@@ -61,8 +61,9 @@ const pushToClient = async(userId, msg) => {
 
     // Use Fcm to send to Client
     const payload = {
-        data: {
-            message: msg
+        notification: {
+            title: 'New Message',
+            body: msg
         },
         token: fcmToken
     };
