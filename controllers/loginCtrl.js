@@ -94,7 +94,7 @@ module.exports = {
                     const user = new User({ facebookId: fbId });
                     userDoc = await user.save();
                     console.log('------------------');
-                    console.log(dbId);
+                    console.log(fbId);
                 }
                 
                 jwtSigner.createAndSendToken(
