@@ -14,7 +14,7 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
         console.log(data);
         
         const recipients = data.userIds;
-        const msg = data.message;
+        const msg = data;
         recipients.forEach(userId => sendMessageToUser(userId, msg));
     });
 }
