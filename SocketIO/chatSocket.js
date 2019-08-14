@@ -72,8 +72,12 @@ const pushToClient = async(userId, msg) => {
     try {
         // Response is a message ID string.
         setInterval(async() => {
-            const messageId = await admin.messaging().send(payload)
-            console.log('Successfully sent message:', messageId);
+            try {
+                const messageId = await admin.messaging().send(payload)
+                console.log('Successfully sent message:', messageId);
+            }catch(err) {
+                console.log(err);
+            }
         }, 2000);
 
 
