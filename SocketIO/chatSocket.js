@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Chat = require('../models/Chat');
 const admin = require("firebase-admin");
 
 module.exports = (socket, emitEvent, getOnlineUsers) => {
@@ -13,44 +14,51 @@ module.exports = (socket, emitEvent, getOnlineUsers) => {
         console.log(socket.id);
         console.log(data);
         
-        const recipients = data.userIds;
-        const msg = data.message;
+        const { author, recipients, msg } = data;
+
+        // Save to Chat
+        await saveToChat(author, recipients, msg);
+        // Send to each user in chat
         recipients.forEach(userId => sendMessageToUser(userId, msg));
     });
 }
 
+const saveToChat = async(author, recipients, msg) => {
+    const chat = await Chat.findOrCreate(recipients);
+    await chat.saveMessage(author, msg);
+}
+
 const sendMessageToUser = async(userId, msg) => {
-    // Can optimize this in future
     const onlineUsers = this.getOnlineUsers();
     const userSocketIds = onlineUsers[userId];
 
-        // No open sockets
-        if(!userSocketIds) {
-            console.log('Push Notif Chat');
+    // No open sockets
+    if(!userSocketIds) {
+        console.log('Push Notif Chat');
 
-            try{
-                await pushToClient(userId, msg);
-            }catch(err) {
-                console.log(err);
-            }
-
-        }else {
-        // Send to all open sockets
-        
-            // Emit
-            console.log('Socket IO Chat');
-            userSocketIds.forEach(id => this.emitEvent(id, 'chat-message-to-recipient', msg));
-
-
-            try{
-                await pushToClient(userId, msg);
-            }catch(err) {
-                console.log(err);
-            }
+        try{
+            await pushNotifToClient(userId, msg);
+        }catch(err) {
+            console.log(err);
         }
+
+    }else {
+    // Send to all open sockets
+    
+        // Emit
+        console.log('Socket IO Chat');
+        userSocketIds.forEach(id => this.emitEvent(id, 'chat-message-to-recipient', msg));
+
+
+        try{
+            await pushNotifToClient(userId, msg);
+        }catch(err) {
+            console.log(err);
+        }
+    }
 }
 
-const pushToClient = async(userId, msg) => {
+const pushNotifToClient = async(userId, msg) => {
     const user = await User.findById(userId);
     console.log('User');
     console.log(user);
@@ -72,7 +80,7 @@ const pushToClient = async(userId, msg) => {
     // registration token.
     try {
         // Response is a message ID string.
-        setInterval(async() => {
+        setTimeout(async() => {
             try {
                 const messageId = await admin.messaging().send(payload)
                 console.log('Successfully sent message:', messageId);

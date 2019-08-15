@@ -38,6 +38,21 @@ let ChatSchema = new mongoose.Schema(
         }
     }
 );
+
+ChatSchema.statics.findUserChat = async function(userId, chatId) {
+    try {
+        // Chat matching id and contiaining user
+        let chat = await this.findOne({ $and: [
+            { _id: chatId },
+            { members: { $elemMatch: userId } }
+        ]});
+
+        return chat;
+    }catch(err) {
+        console.log(err);
+    }
+}
+
 ChatSchema.statics.findOrCreate = async function(membersArr) {
     try {
         let chat = await this.findOne({ $and: [

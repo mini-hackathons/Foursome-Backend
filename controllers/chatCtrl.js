@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Asset = require('../models/Asset');
+const Chat = require('../models/Chat');
 const crud = require('../util/crud');
 
 const chatSocket = require('../SocketIO/chatSocket');
@@ -23,8 +23,20 @@ module.exports = {
             res.status(400).send(err);
         }
     },
-    getMessages: (req, res) => {
+    getMessages: async(req, res) => {
+        const userId = req.user._id;
+        const { chatId, chatPage } = req.body;
+        
+        try {
+            const chat = await Chat.findUserChat(userId, chatId);
+            const page = await chat.getPage(chatPage);
 
+            res.status(200).send(page);
+
+        }catch(err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
     },
     sendMessage: (req, res) => {
         chatSocket.sendMessage('Hi');
