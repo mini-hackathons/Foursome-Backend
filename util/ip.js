@@ -3,10 +3,10 @@ const axios = require('axios');
 module.exports = {
     geolocate: async(ip) => {
         try {
-            const geo = await axios.get(`https://api.ipgeolocationapi.com/geolocate/${ip}`)
-            console.log(geo);
+            const { data } = await axios.get(`https://api.ipgeolocationapi.com/geolocate/${ip}`)
+            console.log(data);
             
-            return geo;
+            return data;
         }catch(err) {
             console.log('IP Geolocation error');
             console.log(err);
