@@ -1,6 +1,6 @@
-require('dotenv').config();
 const express       = require('express');
 const app           = express();
+app.enable('trust proxy');
 
 const helmet        = require('helmet');
 const cors          = require('cors');
