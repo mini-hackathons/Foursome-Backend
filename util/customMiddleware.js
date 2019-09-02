@@ -20,7 +20,7 @@ module.exports = {
         if(!token) {
             console.log('Did not log in');
             
-            const geo = await geolocate(req.ip);
+            const { name } = await geolocate(req.ip);
 
             return next();
         }
