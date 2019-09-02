@@ -1,4 +1,5 @@
-const { verifyToken } = require('./jwt');
+const { verifyToken } = require('./jwt')
+const { geolocate } = require('./ip');
 
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({
@@ -18,6 +19,9 @@ module.exports = {
         // No attempt to login
         if(!token) {
             console.log('Did not log in');
+            
+            const geo = await geolocate(req.ip);
+
             return next();
         }
 
