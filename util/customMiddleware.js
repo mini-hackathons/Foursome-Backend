@@ -20,8 +20,6 @@ module.exports = {
         // No attempt to login
         if(!token) {
             const now = new Date().toLocaleString("en-US", { timeZone: "America/los_angeles" });
-
-            const now = new Date().toLocaleString();
             console.log(' ');
             console.log(`---- No Token provided | ${now} ----`);
 
