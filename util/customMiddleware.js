@@ -18,10 +18,18 @@ module.exports = {
 
         // No attempt to login
         if(!token) {
-            console.log('Did not log in');
-            
-            const { name } = await geolocate(req.ip);
-            console.log(`Ip location --${name}--`)
+            const now = Date.now().toLocaleString();
+            console.log(`---- Login failed | No Token provided ----`);
+
+            try {
+                const { country, city, zip, isp } = await geolocate(req.ip);
+                console.log(`${now} | ${req.ip} | ${isp}`);
+                
+                console.log(`>> ${city}, ${country} ${zip}`);
+            }catch(err) {
+                console.log('Authenticate middleware, no token error:');
+                console.log(err);
+            }
 
             return next();
         }
