@@ -61,7 +61,7 @@ module.exports = {
                 userDoc = await user.save();
             }
 
-            jwtSigner.createAndSendToken(
+            await jwtSigner.createAndSendToken(
                 {
                     user: {
                         _id: userDoc._id
