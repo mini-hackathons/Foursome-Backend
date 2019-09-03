@@ -19,7 +19,7 @@ module.exports = {
         // No attempt to login
         if(!token) {
             const now = new Date().toLocaleString();
-            console.log(`---- Login failed | No Token provided ----`);
+            console.log(`\n---- Login failed | No Token provided ----`);
 
             try {
                 const { country, city, zip, isp } = await geolocate(req.ip);
