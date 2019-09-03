@@ -19,7 +19,7 @@ module.exports = {
         // No attempt to login
         if(!token) {
             const now = new Date().toLocaleString();
-            console.log();
+            console.log(' ');
             console.log(`---- Login failed | No Token provided ----`);
 
             try {
