@@ -21,6 +21,7 @@ module.exports = {
             console.log('Did not log in');
             
             const { name } = await geolocate(req.ip);
+            console.log(`Ip location --${name}--`)
 
             return next();
         }
