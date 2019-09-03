@@ -1,3 +1,4 @@
+
 const { verifyToken } = require('./jwt')
 const { geolocate } = require('./ip');
 
@@ -20,11 +21,11 @@ module.exports = {
         if(!token) {
             const now = new Date().toLocaleString();
             console.log(' ');
-            console.log(`---- Login failed | No Token provided ----`);
+            console.log(`---- No Token provided | ${now} ----`);
 
             try {
                 const { country, city, zip, isp } = await geolocate(req.ip);
-                console.log(`${now} | ${req.ip} | ${isp}`);
+                console.log(`>> ${req.ip} | ${isp}`);
                 
                 console.log(`>> ${city}, ${country} ${zip}`);
             }catch(err) {
