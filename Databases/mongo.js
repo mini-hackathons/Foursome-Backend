@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const MONGO_PATH = process.env.MONGODB_URI || 'mongodb://localhost:27017/foursome';
 
-const connectToMongo = async (mongoPath) => {
+const connectToMongo = async () => {
+
     try {
-        await mongoose.connect(mongoPath, {
+        await mongoose.connect(MONGO_PATH, {
             useNewUrlParser: true,
             useCreateIndex: true
         });
