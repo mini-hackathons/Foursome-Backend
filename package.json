@@ -19,7 +19,7 @@
   "homepage": "https://github.com/mini-hackathons/Closet-Backend#readme",
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
-    "aws-sdk": "^2.430.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.18.1",
     "bcrypt": "^3.0.4",
     "bcrypt-nodejs": "^0.0.3",
